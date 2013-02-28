@@ -12,7 +12,7 @@ App.Router.map (match) ->
 
 App.HomeRoute = Em.Route.extend
   setupControllers: (controller) ->
-    controller.set('posts', App.store.findAll(App.Example))
+    controller.set('posts', App.store.findAll(App.Repo))
 
 App.ProfileRoute = Em.Route.extend
   setupControllers: (controller) ->
