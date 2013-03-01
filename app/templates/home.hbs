@@ -1,7 +1,9 @@
-<div>
 {{#each content}}
-  <div>
-    {{name}}
+  <div class="row">
+    <div {{bindAttr class="displayClass"}}>
+      <div class="well">
+        {{name}}
+      </div>
+    </div>
   </div>
 {{/each}}
-</div>

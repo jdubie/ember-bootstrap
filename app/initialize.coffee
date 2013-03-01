@@ -5,3 +5,8 @@ require 'controllers'
 require 'views'
 require 'router'
 require 'helpers'
+
+###############################################################################
+## Create websocket connection
+###############################################################################
+
