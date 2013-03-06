@@ -10,12 +10,15 @@ App.Repo = DS.Model.extend
   ctime     : DS.attr 'date'
 
   # state
+  progress  : DS.attr 'number'
   state     : DS.attr 'number' # { archived, storing, restoring, repo }
   isPrivate : DS.attr 'boolean' # public/private
 
   storeRepo: () -> # this.store is reserved
     if @get('state') is states.REPO
       @set('state', states.STORING)
+
+  # TODO move these into view
 
   # move this into view?
   containerClass: (() ->
@@ -25,9 +28,17 @@ App.Repo = DS.Model.extend
       'span5 offset7'
   ).property('inFridge')
 
+  progressStyle: (() ->
+    progress = @get('progress') * 100
+    "style=\"width: #{progress}%;\""
+  ).property('progress')
+
+  progressVisible: (() ->
+    @get('state') in [ states.STORING , states.RESTORING ]
+  ).property('state')
+
   buttonClass: (() ->
     result = 'btn pull-right'
     result += ' disabled' if @get('state') is states.STORING
-    console.log @get('state')
     result
   ).property('state')

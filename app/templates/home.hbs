@@ -3,7 +3,16 @@
     {{#view App.RepoView repoBinding="this"}}
       <div {{bindAttr class="containerClass"}}>
         <div class="well">
-          {{name}}
+          <div class="span1">
+            {{name}}
+          </div>
+          {{#if progressVisible}}
+            <div class="span2">
+              <div class="progress progress-striped active">
+                <div class="bar" {{bindAttr style="progressStyle"}}></div>
+              </div>
+            </div>
+          {{/if}}
           <div
             {{bindAttr class="buttonClass"}}
             {{action store target="view"}}
