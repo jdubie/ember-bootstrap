@@ -1,9 +1,15 @@
 {{#each content}}
   <div class="row">
-    <div {{bindAttr class="displayClass"}}>
-      <div class="well">
-        {{name}}
+    {{#view App.RepoView repoBinding="this"}}
+      <div {{bindAttr class="containerClass"}}>
+        <div class="well">
+          {{name}}
+          <div
+            {{bindAttr class="buttonClass"}}
+            {{action store target="view"}}
+          >Archive</div>
+        </div>
       </div>
-    </div>
+    {{/view}}
   </div>
 {{/each}}
