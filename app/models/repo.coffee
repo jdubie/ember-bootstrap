@@ -14,6 +14,12 @@ App.Repo = DS.Model.extend
   state     : DS.attr 'number' # { archived, storing, restoring, repo }
   isPrivate : DS.attr 'boolean' # public/private
 
+  finishedStoring: () ->
+    #if @get('state') is states.STORING
+    #  @set('state', states.ARCHIVED)
+    console.log 'here'
+    @set('state', states.ARCHIVED)
+
   storeRepo: () -> # this.store is reserved
     if @get('state') is states.REPO
       @set('state', states.STORING)
@@ -22,11 +28,10 @@ App.Repo = DS.Model.extend
 
   # move this into view?
   containerClass: (() ->
-    if @get('inFridge')
-      'span5'
-    else
-      'span5 offset7'
-  ).property('inFridge')
+    switch @get('state')
+      when states.ARCHIVED, states.RESTORING then 'span5'
+      when states.REPO, states.STORING then 'span5 offset7'
+  ).property('state')
 
   progressStyle: (() ->
     progress = @get('progress') * 100
