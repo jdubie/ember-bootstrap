@@ -17,6 +17,7 @@ App.HomeController = Em.ArrayController.extend
   #}
 
 App.RepoController = Em.ObjectController.extend
+  toits: 'moits'
   testP: 'wefwefwe'
   nameLength: (() ->
     console.log 'hyeaaa'

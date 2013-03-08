@@ -1,15 +1,9 @@
 App = require 'app'
 debug = require('debug') 'DEBUG router'
 
-#App.Route = Em.Router.extend
-#  rootUrl: '/'
-#  enableLogging: true
-#  location: 'history'
-
-App.Router.map (match) ->
-  match('/').to('home')
-  match('/profile').to('profile')
+App.Router.map () ->
+  @route "home", { path: "/" }
 
 App.HomeRoute = Em.Route.extend
-  setupControllers: (controller) ->
+  setupController: (controller) ->
     controller.set('content', App.store.findAll(App.Repo))

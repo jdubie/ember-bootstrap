@@ -4,7 +4,7 @@ App = Em.Application.create()
 
 # create Ember Data store
 App.store = DS.Store.create
-  revision: 10
+  revision: 12
   adapter: DS.RESTAdapter.create
     bulkCommit: false
     serializer: DS.JSONSerializer.extend
