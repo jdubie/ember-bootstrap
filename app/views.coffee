@@ -13,8 +13,8 @@ App.HomeView = Em.View.extend
 App.RepoView = Em.View.extend
   value: 5
   store: () ->
-    this.get('repo').finishedStoring()
-    #this.get('repo').storeRepo()
+    #this.get('repo').finishedStoring()
+    this.get('repo').storeRepo()
 
 App.ProfileView = Em.View.extend
   templateName: require('templates/profile')

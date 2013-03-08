@@ -1,8 +1,4 @@
-states =
-  REPO      : 0
-  STORING   : 1
-  RESTORING : 2
-  ARCHIVED  : 3
+c = require 'constants'
 
 App.Repo = DS.Model.extend
   _id       : DS.attr 'string'
@@ -18,32 +14,9 @@ App.Repo = DS.Model.extend
     #if @get('state') is states.STORING
     #  @set('state', states.ARCHIVED)
     console.log 'here'
-    @set('state', states.ARCHIVED)
+    @set('state', c.states.ARCHIVED)
 
   storeRepo: () -> # this.store is reserved
-    if @get('state') is states.REPO
-      @set('state', states.STORING)
+    if @get('state') is c.states.REPO
+      @set('state', c.states.STORING)
 
-  # TODO move these into view
-
-  # move this into view?
-  containerClass: (() ->
-    switch @get('state')
-      when states.ARCHIVED, states.RESTORING then 'span5'
-      when states.REPO, states.STORING then 'span5 offset7'
-  ).property('state')
-
-  progressStyle: (() ->
-    progress = @get('progress') * 100
-    "style=\"width: #{progress}%;\""
-  ).property('progress')
-
-  progressVisible: (() ->
-    @get('state') in [ states.STORING , states.RESTORING ]
-  ).property('state')
-
-  buttonClass: (() ->
-    result = 'btn pull-right'
-    result += ' disabled' if @get('state') is states.STORING
-    result
-  ).property('state')
