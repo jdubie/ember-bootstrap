@@ -28,6 +28,7 @@
     "brunch": "*",
     "mocha": "0.14.0",
     "expect.js": "0.1.2",
-    "express": "2.5.8"
+    "express": "2.5.8",
+    "mock-http": "git://github.com/jdubie/mock-http.git"
   }
 }
