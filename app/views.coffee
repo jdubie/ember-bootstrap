@@ -3,21 +3,18 @@
 #################################################
 
 App.ApplicationView = Em.View.extend
-  didInsertElement: -> @$().hide().fadeIn('slow')
   templateName: require 'templates/application'
+  didInsertElement: ->
 
 App.HomeView = Em.View.extend
-  didInsertElement: -> @$().hide().fadeIn('slow')
   templateName: require 'templates/home'
-
-App.RepoView = Em.View.extend
-  value: 5
-  store: () ->
-    #this.get('repo').finishedStoring()
-    this.get('repo').storeRepo()
-
-App.ProfileView = Em.View.extend
-  templateName: require('templates/profile')
+  didInsertElement: ->
+    myLatLng = new google.maps.LatLng(43.19957554056385, -96.35130086791992) # IOWA
+    mapOptions =
+      zoom: 14
+      center: myLatLng
+      mapTypeId: google.maps.MapTypeId.SATELLITE
+    window.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions)
 
 App.NavbarView = Em.View.extend
   templateName: require 'templates/navbar'

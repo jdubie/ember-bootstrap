@@ -2,43 +2,50 @@
 ## CONTROLLERS
 #################################################
 
-c = require('constants')
-
 App.ApplicationController = Em.Controller.extend
   currentUser: null
 
 App.HomeController = Em.ArrayController.extend
-  itemController: 'repo'
+  itemController: 'field'
 
-App.RepoController = Em.ObjectController.extend
-  finishedStoring: () ->
-    @get('model').finishedStoring()
-  storeRepo: () ->
-    @get('model').storeRepo()
+App.FieldController = Em.ObjectController.extend
+  # Em.observer
+  id: (() ->
+    plotField.call(this, @get('points_'))
+    #console.log(points)
+  ).observes('points_', 'selected')
 
-    #console.log 'hereeerer'
-    ##if @get('state') is states.STORING
-    ##  @set('state', states.ARCHIVED)
-    #console.log 'here'
-    #@set('state', states.ARCHIVED)
+  toggleSelected: () ->
+    if @get('selected') then @set('selected', false)
+    else @set('selected', true)
 
-  containerClass: (() ->
-    switch @get('state')
-      when c.states.ARCHIVED, c.states.RESTORING then 'span5'
-      when c.states.REPO, c.states.STORING then 'span5 offset7'
-  ).property('state')
+plotField = (points) ->
+  self = this
 
-  progressStyle: (() ->
-    progress = @get('progress') * 100
-    "style=\"width: #{progress}%;\""
-  ).property('progress')
+  @get('polygon')?.setMap(null)
 
-  progressVisible: (() ->
-    @get('state') in [ c.states.STORING , c.states.RESTORING ]
-  ).property('state')
+  return unless points.length > 3
 
-  buttonClass: (() ->
-    result = 'btn pull-right'
-    result += ' disabled' if @get('state') is c.states.STORING
-    result
-  ).property('state')
+  coords = points.map (point) ->
+    new google.maps.LatLng(point.lat, point.lng)
+
+  # Construct the polygon
+  # Note that we don't specify an array or arrays, but instead just
+  # a simple array of LatLngs in the paths property
+  field = new google.maps.Polygon
+    paths: coords
+    strokeColor: "#FFFF99"
+    strokeOpacity: 0.5
+    strokeWeight: 2
+    fillColor: "#EF9B0F"
+    fillOpacity: 0
+
+  if @get('selected')
+    field.fillOpacity = 0.5
+
+  field.setMap(window.map)
+  @set('polygon', field)
+
+  google.maps.event.addListener field, 'click', (e) ->
+    console.log('got click', self.get('_id'))
+    self.toggleSelected()

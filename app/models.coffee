@@ -2,4 +2,4 @@
 ## MODELS
 #################################################
 
-require 'models/repo'
+require 'models/field'
